@@ -103,10 +103,10 @@ async def synthesize_speech(params: TTSParameters):
         audio_b64 = base64.b64encode(audio_bytes).decode("utf-8")
         
         # Convert visualization to base64
-        img_buffer = BytesIO()
-        fig.savefig(img_buffer, format="png", bbox_inches="tight")
-        plt.close(fig)
-        img_b64 = base64.b64encode(img_buffer.getvalue()).decode("utf-8")
+        #img_buffer = BytesIO()
+        #fig.savefig(img_buffer, format="png", bbox_inches="tight")
+        #plt.close(fig)
+        #img_b64 = base64.b64encode(img_buffer.getvalue()).decode("utf-8")
 
         return {
             "audio": {
@@ -115,7 +115,8 @@ async def synthesize_speech(params: TTSParameters):
                 "format": "audio/wav"
             },
             "visualization": {
-                "content_base64": img_b64,
+                #"content_base64": img_b64,
+                "content": fig,
                 "format": "image/png"
             }
         }
