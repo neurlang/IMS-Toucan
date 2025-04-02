@@ -79,17 +79,21 @@ async def synthesize_speech(params: TTSParameters):
         
         # Generate speech and visualization
         sr, wav, fig = tts.read(
-            text=params.text,
-            filename=None,
-            source_lang=params.language,
-            target_lang=params.language,
-            speaker_reference=None,
+            prompt=params.text,
+            language=params.language,
+            voice_seed=123456,
             prosody_creativity=params.prosody_creativity,
             duration_scaling_factor=params.duration_scaling_factor,
-            pitch_shift=params.pitch_shift,
-            speaking_rate=params.speaking_rate,
-            energy_scale=params.energy_scale,
-            emotion_embedding=params.emotion_embedding
+            pause_duration_scaling_factor=1.,
+            pitch_variance_scale=1.,
+            energy_variance_scale=params.energy_scale,
+            emb_slider_1=0.,
+            emb_slider_2=0.,
+            emb_slider_3=0.,
+            emb_slider_4=0.,
+            emb_slider_5=0.,
+            emb_slider_6=0.,
+            loudness_in_db=-24.
         )
         
         # Convert audio to base64
