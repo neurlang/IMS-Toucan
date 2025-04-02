@@ -38,7 +38,7 @@ pykan~=0.2.6
 huggingface-hub~=0.25.2
 pynput~=1.7.7
 # Core requirements
-fastapi==0.110.0
+fastapi==0.115.2
 uvicorn==0.27.0
 networkx~=3.3
 #
