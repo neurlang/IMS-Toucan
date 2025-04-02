@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  tts-service:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile
+    container_name: ims-toucan-tts
+    ports:
+      - "8954:8954"
+    environment:
+      - PYTHONUNBUFFERED=1
+    #deploy:
+    #  resources:
+    #    reservations:
+    #      devices:
+    #        - driver: nvidia
+    #          count: 1
+    #          capabilities: [gpu]
+    volumes:
+      - ./cache:/app/cache  # For model caching
+    restart: unless-stopped
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8954"]
