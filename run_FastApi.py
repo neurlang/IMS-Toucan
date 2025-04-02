@@ -83,7 +83,7 @@ async def synthesize_speech(params: TTSParameters):
             reference_audio=None,
             language=params.language,
             accent=params.language,
-            voice_seed=123456,
+            voice_seed=0,
             prosody_creativity=params.prosody_creativity,
             duration_scaling_factor=params.duration_scaling_factor,
             pause_duration_scaling_factor=1.,
