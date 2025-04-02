@@ -17,7 +17,7 @@ phonemizer~=3.2.1
 gradio~=5.4.0
 pyqt5~=5.15.11
 pyqtgraph~=0.13.7
-wandb~=0.13.5
+wandb~=0.16.0
 speechbrain==0.5.13
 dragonmapper~=0.2.6
 alias_free_torch~=0.0.6
