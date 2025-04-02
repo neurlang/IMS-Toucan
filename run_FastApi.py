@@ -69,6 +69,7 @@ async def synthesize_speech(params: TTSParameters):
         }
         
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         # Clean up resources
