@@ -45,7 +45,8 @@ class ControllableInterface:
              emb_slider_4,
              emb_slider_5,
              emb_slider_6,
-             loudness_in_db
+             loudness_in_db,
+             direct_ipa=False
              ):
         if self.current_language != language:
             self.model.set_phonemizer_language(language)
@@ -68,8 +69,9 @@ class ControllableInterface:
         else:
             self.model.set_utterance_embedding(reference_audio)
 
-        phones = self.model.text2phone.get_phone_string(prompt)
-        if len(phones) > 1800:
+        if not direct_ipa:
+          phones = self.model.text2phone.get_phone_string(prompt)
+          if len(phones) > 1800:
             if language == "deu":
                 prompt = "Deine Eingabe war zu lang. Bitte versuche es entweder mit einem kürzeren Text oder teile ihn in mehrere Teile auf."
             elif language == "ell":
@@ -104,10 +106,14 @@ class ControllableInterface:
                 if self.current_accent != "eng":
                     self.model.set_accent_language("eng")
                     self.current_accent = "eng"
+          print(prompt + "\n\n")
+        elif:
+          if len(prompt) > 1800:
+              prompt = "jˈʊɹ ˈɪnpʊt wˈɑz tˈu lˈɔŋ. pliːz tɹˈaɪ ˈiðɚ ˈeɪ ʃˈɔɹtɚ tˈɛkst ɚ splɪt ˈɪt ˈɪntuː sˈɛvɚəl pˈɑɹts"
+          print("Direct IPA:" + prompt + "\n\n")
 
-        print(prompt + "\n\n")
         wav, sr, fig = self.model(prompt,
-                                  input_is_phones=False,
+                                  input_is_phones=direct_ipa,
                                   duration_scaling_factor=duration_scaling_factor,
                                   pitch_variance_scale=pitch_variance_scale,
                                   energy_variance_scale=energy_variance_scale,
