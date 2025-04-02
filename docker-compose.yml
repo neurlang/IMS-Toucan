@@ -20,4 +20,4 @@ services:
     volumes:
       - ./cache:/app/cache  # For model caching
     restart: unless-stopped
-    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8954"]
+    command: ["uvicorn", "run_FastApi:app", "--host", "0.0.0.0", "--port", "8954"]
