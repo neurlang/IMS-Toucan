@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libportaudio2 \
     libsqlite3-dev \
     build-essential \
+    python3-distutils \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
