@@ -107,7 +107,7 @@ class ControllableInterface:
                     self.model.set_accent_language("eng")
                     self.current_accent = "eng"
           print(prompt + "\n\n")
-        elif:
+        else:
           if len(prompt) > 1800:
               prompt = "jˈʊɹ ˈɪnpʊt wˈɑz tˈu lˈɔŋ. pliːz tɹˈaɪ ˈiðɚ ˈeɪ ʃˈɔɹtɚ tˈɛkst ɚ splɪt ˈɪt ˈɪntuː sˈɛvɚəl pˈɑɹts"
           print("Direct IPA:" + prompt + "\n\n")
