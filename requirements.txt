@@ -37,6 +37,8 @@ g2pk~=0.9.4
 pykan~=0.2.6
 huggingface-hub~=0.25.2
 pynput~=1.7.7
-PyAutoGUI~=0.9.54
-networkx~=3.3
+# Core requirements
+fastapi==0.110.0
+uvicorn==0.27.0networkx~=3.3
+#
 scikit-learn~=1.5.0
