@@ -31,4 +31,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # (Optional) Set the command to run your application
-# CMD ["python", "your_main_script.py"]
+# CMD ["python", "run_FastApi.py"]
