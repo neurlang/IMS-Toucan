@@ -6,8 +6,49 @@ import torch
 import matplotlib.pyplot as plt
 import numpy as np
 from InferenceInterfaces.ControllableInterface import ControllableInterface
+import logging
+import sys
+
+# Configure advanced logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s | %(levelname)-8s | %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+logger = logging.getLogger(__name__)
 
 app = FastAPI()
+logger.info("FastAPI app created successfully")
+
+@app.on_event("startup")
+async def startup_event():
+    try:
+        # Test critical imports
+        import torch
+        import torchaudio
+        from InferenceInterfaces.ControllableInterface import ControllableInterface
+        
+        logger.info(f"PyTorch version: {torch.__version__}")
+        logger.info(f"CUDA available: {torch.cuda.is_available()}")
+        
+    except Exception:
+        logger.critical("STARTUP FAILED:\n%s", traceback.format_exc())
+        raise  # Crash the app if startup fails
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(
+        "Unhandled exception: %s\nRequest URL: %s\n%s",
+        str(exc),
+        request.url,
+        traceback.format_exc()
+    )
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal server error"},
+    )
 
 class TTSParameters(BaseModel):
     text: str
@@ -24,6 +65,11 @@ def float2pcm(wav: np.ndarray) -> bytes:
     wav = np.clip(wav, -1.0, 1.0)
     wav = (wav * 32767).astype(np.int16)
     return wav.tobytes()
+
+
+@app.get("/")
+async def root():
+    return {"status": "OK"}
 
 @app.post("/synthesize/")
 async def synthesize_speech(params: TTSParameters):
@@ -69,7 +115,7 @@ async def synthesize_speech(params: TTSParameters):
         }
         
     except Exception as e:
-        print(e)
+        logger.critical(f"INITIALIZATION FAILED: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         # Clean up resources
