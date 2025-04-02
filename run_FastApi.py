@@ -28,10 +28,8 @@ def float2pcm(wav: np.ndarray) -> bytes:
 @app.post("/synthesize/")
 async def synthesize_speech(params: TTSParameters):
     try:
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        
         # Initialize TTS model
-        tts = ControllableInterface(device=device)
+        tts = ControllableInterface()
         
         # Generate speech and visualization
         sr, wav, fig = tts.read(
