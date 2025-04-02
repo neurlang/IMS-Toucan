@@ -80,7 +80,9 @@ async def synthesize_speech(params: TTSParameters):
         # Generate speech and visualization
         sr, wav, fig = tts.read(
             prompt=params.text,
+            reference_audio=None,
             language=params.language,
+            accent=params.language,
             voice_seed=123456,
             prosody_creativity=params.prosody_creativity,
             duration_scaling_factor=params.duration_scaling_factor,
