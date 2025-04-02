@@ -39,6 +39,7 @@ huggingface-hub~=0.25.2
 pynput~=1.7.7
 # Core requirements
 fastapi==0.110.0
-uvicorn==0.27.0networkx~=3.3
+uvicorn==0.27.0
+networkx~=3.3
 #
 scikit-learn~=1.5.0
