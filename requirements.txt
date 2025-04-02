@@ -1,5 +1,5 @@
-﻿torch~=2.4.0+cu124
-torchaudio~=2.4.0+cu124
+torch>=2.4.0
+torchaudio>=2.4.0
 torch_complex~=0.4.3
 epitran==1.24
 tqdm~=4.64.1
