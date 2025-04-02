@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libasound-dev \
     libportaudio2 \
     libsqlite3-dev \
+    gcc \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
