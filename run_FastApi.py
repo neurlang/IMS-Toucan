@@ -8,6 +8,30 @@ import numpy as np
 from InferenceInterfaces.ControllableInterface import ControllableInterface
 import logging
 import sys
+import numpy as np
+from pydub import AudioSegment
+import base64
+from io import BytesIO
+
+def float_array_to_base64_opus_ogg(audio_array: np.ndarray, sample_rate: int = 24000) -> str:
+    # Scale to 16-bit PCM
+    pcm_data = (audio_array * 32767).astype(np.int16)
+    
+    # Create AudioSegment
+    audio = AudioSegment(
+        pcm_data.tobytes(),
+        frame_rate=sample_rate,
+        sample_width=2,  # 16-bit
+        channels=1
+    )
+    
+    # Export to Ogg Opus in memory
+    buffer = BytesIO()
+    audio.export(buffer, format="ogg", codec="libopus")
+    
+    # Convert to Base64
+    base64_str = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    return base64_str
 
 # Configure advanced logging
 logging.basicConfig(
@@ -99,8 +123,7 @@ async def synthesize_speech(params: TTSParameters):
         )
         
         # Convert audio to base64
-        audio_bytes = float2pcm(wav)
-        audio_b64 = base64.b64encode(audio_bytes).decode("utf-8")
+        audio_b64 = float_array_to_base64_opus_ogg(wav)
         
         # Convert visualization to base64
         #img_buffer = BytesIO()
@@ -110,9 +133,8 @@ async def synthesize_speech(params: TTSParameters):
 
         return {
             "audio": {
-                "sample_rate": sr,
                 "content_base64": audio_b64,
-                "format": "audio/wav"
+                "format": "audio/ogg"
             },
             "visualization": {
                 #"content_base64": img_b64,
