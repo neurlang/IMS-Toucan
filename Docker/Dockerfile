@@ -2,7 +2,7 @@
 # docker build -f Docker/Dockerfile -t ims-toucan .
 
 # Use the official Python 3.10 image as base
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
